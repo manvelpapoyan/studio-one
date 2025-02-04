@@ -4,14 +4,52 @@ This is a **React + Redux (Thunk) + TypeScript** news application that allows us
 
 ## 🚀 Features
 
-- **News CRUD Operations** (Stored in local JSON data and handled via Redux)
-- **News Listing** (Displays title, description, image, Fibonacci number, prime number check)
-- **Lazy Loading** (Images & Components)
-- **Infinite Scroll** (For large data sets)
-- **News Addition via Modal** (Material UI Dialog)
-- **Delete News Items** (Removes from Redux Store)
-- **Frontend Search & Filtering**
-- **Material UI for UI Components**
+### Authentication State
+
+- **Public Access (Non-authenticated users)**
+
+  - View all news articles
+  - Search and filter news
+  - View Fibonacci numbers and prime number indicators
+  - Infinite scroll through news items
+
+- **Authenticated Users (Additional features)**
+  - All public access features
+  - Add new news articles via modal
+  - Delete existing news articles
+  - Full CRUD operations access
+
+### Core Features
+
+1. **News CRUD Operations**
+
+   - Create: Add new news articles (Authenticated users only)
+   - Read: View news articles (All users)
+   - Update: Modify existing articles (Not implemented)
+   - Delete: Remove news articles (Authenticated users only)
+   - Data stored in local JSON and managed via Redux
+
+2. **News Listing**
+
+   - Title and description display
+   - Image preview
+   - Fibonacci number calculation
+   - Prime number verification
+   - Responsive grid layout
+
+3. **Performance Optimizations**
+
+   - Lazy loading for images
+   - Component lazy loading
+   - Infinite scroll implementation
+   - Optimized rendering for large datasets
+
+4. **User Interface**
+   - Material UI components
+   - Responsive design
+   - Modal for news addition
+   - Search and filter functionality
+   - Clean and intuitive layout
 
 ---
 
@@ -31,9 +69,12 @@ This is a **React + Redux (Thunk) + TypeScript** news application that allows us
 /news-app
   ├── src/
   │   ├── components/   # Reusable UI Components
+  │   ├── constants/    # For Constants & Hard Coded Data
   │   ├── pages/        # Route Pages
   │   ├── redux/        # Redux Store & Slices
   │   ├── services/     # API Service Layer
+  │   ├── helpers/      # StorageManager
+  │   ├── hoc/          # Private Route Protection
   │   ├── utils/        # Utility Functions (Fibonacci)
   │   ├── App.tsx       # Main Application File
   │   ├── index.tsx     # React DOM Rendering
@@ -109,79 +150,6 @@ The application will be available at `http://localhost:5137/`.
 
 ---
 
-## 🏗️ Project Architecture
-
-### **Redux Store (`src/redux/store.ts`)**
-
-```ts
-import { configureStore } from "@reduxjs/toolkit";
-import newsReducer from "./slices/newsSlice";
-
-export const store = configureStore({
-	reducer: {
-		news: newsReducer,
-	},
-});
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-```
-
-### **News Service (`src/services/newsService.ts`)**
-
-```ts
-import axios from "axios";
-const API_URL = "http://localhost:5000/news";
-
-export const fetchNews = async () => (await axios.get(API_URL)).data;
-export const addNews = async (newsItem) =>
-	(await axios.post(API_URL, newsItem)).data;
-export const deleteNews = async (id) => await axios.delete(`${API_URL}/${id}`);
-```
-
-### **News Slice (`src/redux/slices/newsSlice.ts`)**
-
-```ts
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchNews, addNews, deleteNews } from "../../services/newsService";
-
-export const getNews = createAsyncThunk(
-	"news/getNews",
-	async () => await fetchNews()
-);
-export const createNews = createAsyncThunk(
-	"news/createNews",
-	async (newsItem) => await addNews(newsItem)
-);
-export const removeNews = createAsyncThunk("news/removeNews", async (id) => {
-	await deleteNews(id);
-	return id;
-});
-
-const newsSlice = createSlice({
-	name: "news",
-	initialState: { newsList: [], loading: false },
-	reducers: {},
-	extraReducers: (builder) => {
-		builder.addCase(getNews.fulfilled, (state, action) => {
-			state.newsList = action.payload;
-		});
-		builder.addCase(createNews.fulfilled, (state, action) => {
-			state.newsList.push(action.payload);
-		});
-		builder.addCase(removeNews.fulfilled, (state, action) => {
-			state.newsList = state.newsList.filter(
-				(news) => news.id !== action.payload
-			);
-		});
-	},
-});
-
-export default newsSlice.reducer;
-```
-
----
-
 ## ✅ Best Practices Used
 
 - **Redux Toolkit** for state management
@@ -204,17 +172,10 @@ Then deploy using **Vercel, Netlify, or any static hosting service**.
 
 ---
 
-## 🤝 Contributing
-
-1. **Fork** the repository
-2. **Create a feature branch** (`git checkout -b feature-name`)
-3. **Commit changes** (`git commit -m "Added new feature"`)
-4. **Push to branch** (`git push origin feature-name`)
-5. **Submit a Pull Request** 🚀
-
 ---
 
 ## 📝 License
 
 This project is licensed under the **MIT License**.
+
 # studio-one
