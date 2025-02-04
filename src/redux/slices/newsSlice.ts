@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchNews, addNews, deleteNews, NewsItem } from "../../services/newsService";
+import { RootState } from "../store";
 
 // Fetch all news (Thunk)
 export const getNews = createAsyncThunk("news/getNews", async () => {
@@ -41,5 +42,11 @@ const newsSlice = createSlice({
             });
     },
 });
+
+
+
+
+export const selectNewsList = (state: RootState) => state.news.newsList;
+export const selectNewsLoading = (state: RootState) => state.news.loading;
 
 export default newsSlice.reducer;

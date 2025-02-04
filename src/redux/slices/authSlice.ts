@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { NavigateFunction } from "react-router-dom";
-import { RoutesName, StorageKey } from "../../constants";
+import { fakePassword, fakeUsername, RoutesName, StorageKey } from "../../constants";
 import StorageManager from "../../helpers/storageManager";
 
 interface AuthState {
@@ -22,7 +22,7 @@ export const authSlice = createSlice({
     reducers: {
         login: (state, action: PayloadAction<{ username: string; password: string  ,navigate:NavigateFunction}>) => {
             const { username, password,navigate } = action.payload;
-            if (username === "admin" && password === "12345") {
+            if (username === fakeUsername && password === fakePassword) {
                 StorageManager.setItem(StorageKey.IS_AUTHENTICATED, 'true');
                 StorageManager.setItem(StorageKey.TOKEN, 'fake-jwt-token');
                 state.user = username;
@@ -46,6 +46,10 @@ export const selectAuthState = (state: RootState) => state.auth;
 export const authErrorSelector = createSelector(
     [selectAuthState],
     (auth) => auth.error
+);
+export const authSelector = createSelector(
+    [selectAuthState],
+    (auth) => auth.isAuthenticated
 );
 export const { login, logout } = authSlice.actions;
 export default authSlice.reducer;
