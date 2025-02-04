@@ -1,0 +1,12 @@
+{
+  "news": [
+    {
+      "id": "436e",
+      "title": "aaa",
+      "description": "aaaa",
+      "image": "aaa",
+      "fibonacci": 21,
+      "isPrime": false
+    }
+  ]
+}
