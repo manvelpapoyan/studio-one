@@ -1,44 +1,20 @@
 {
   "news": [
     {
-      "id": "671b",
-      "title": "a",
+      "id": "d8a4",
+      "title": "aaa 3",
       "description": "",
       "image": "https://picsum.photos/id/17/200/300",
       "fibonacci": 3,
       "isPrime": true
     },
     {
-      "id": "5c47",
-      "title": "a",
+      "id": "da81",
+      "title": "sss 5",
       "description": "",
       "image": "https://picsum.photos/id/17/200/300",
       "fibonacci": 5,
       "isPrime": true
-    },
-    {
-      "id": "2e53",
-      "title": "a",
-      "description": "",
-      "image": "https://picsum.photos/id/17/200/300",
-      "fibonacci": 8,
-      "isPrime": false
-    },
-    {
-      "id": "208d",
-      "title": "ww",
-      "description": "",
-      "image": "https://picsum.photos/id/17/200/300",
-      "fibonacci": 13,
-      "isPrime": true
-    },
-    {
-      "id": "c01a",
-      "title": "wwwww",
-      "description": "",
-      "image": "https://picsum.photos/id/17/200/300",
-      "fibonacci": 21,
-      "isPrime": false
     }
   ]
 }

@@ -16,7 +16,8 @@ const AddNewsModal: React.FC<{ open: boolean; onClose: () => void }> = ({ open, 
 
     const handleSubmit = () => {
         const fibonacci = findFibonacciSequence(fibonacciLastIndex);
-        dispatch(createNews({ title, description, image, fibonacci, isPrime: isPrime(fibonacci) }));
+        const titleWithFibonacci = title + ' ' + fibonacci;
+        dispatch(createNews({title: titleWithFibonacci, description, image, fibonacci, isPrime: isPrime(fibonacci) }));
         onClose();
     };
 
